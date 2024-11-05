@@ -60,7 +60,7 @@ while (true)
         watch.Stop();
 
         Console.WriteLine($"Done! Elapsed time: {watch.ElapsedMilliseconds}ms");
-        Console.WriteLine($"Waiting {sleepTime} second(s)...");
+        Console.WriteLine($"Waiting {sleepTime.ToString("N0")} second(s)...");
         Thread.Sleep(sleepTime * 1000);
     }
 }
