@@ -30,11 +30,21 @@ while (true)
     if (Directory.Exists(cache))
     {
         Console.WriteLine("Cache path found: " + cache);
-        string backupPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VRChat Cache Backup");
+        string backupPath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VRChat Cache Backup"));
         if (!Directory.Exists(backupPath))
         {
             Directory.CreateDirectory(backupPath);
         }
+        Console.WriteLine("Backup path found: " + backupPath);
+
+        if (File.Exists(Path.Combine(backupPath, "__info")))
+        {
+            Console.WriteLine("Outdated INFO file found, purging...");
+            File.Delete(Path.Combine(backupPath, "__info"));
+        }
+        Console.WriteLine("Copying INFO file...");
+        File.Copy(Path.Combine(cache, "__info"), Path.Combine(backupPath, "__info"));
+
         Stopwatch watch = new Stopwatch();
         watch.Start();
         foreach (string dir in Directory.GetDirectories(cache))
